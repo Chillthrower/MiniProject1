@@ -1,10 +1,15 @@
 
+import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
+import LoginForm from "@/components/auth/LoginForm";
+import SignupForm from "@/components/auth/SignupForm";
 import { useApp } from "@/context/AppContext";
 import { useNavigate } from "react-router-dom";
-import { genres } from "@/data/movieData";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const Profile = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { preferences, favorites, setPreferences } = useApp();
   const navigate = useNavigate();
 
@@ -32,10 +37,49 @@ const Profile = () => {
       .map(([genre]) => genre);
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-netflixBlack">
+        <Navbar />
+        <div className="pt-24 px-6 md:px-16 pb-16">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex justify-center gap-4 mb-8">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-netflixRed hover:bg-netflixRed/90">
+                    Login
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-netflixGray border-netflixDarkGray">
+                  <LoginForm />
+                </DialogContent>
+              </Dialog>
+              
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" className="border-netflixRed text-netflixRed hover:bg-netflixRed/10">
+                    Sign Up
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-netflixGray border-netflixDarkGray">
+                  <SignupForm />
+                </DialogContent>
+              </Dialog>
+            </div>
+            
+            <div className="text-center text-white/80">
+              <h2 className="text-2xl font-bold mb-4">Welcome to Netflix</h2>
+              <p>Please login or sign up to access your profile</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-netflixBlack">
       <Navbar />
-      
       <div className="pt-24 px-6 md:px-16 pb-16">
         <div className="max-w-3xl mx-auto">
           <div className="bg-netflixGray rounded-lg overflow-hidden shadow-xl">
