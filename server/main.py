@@ -20,7 +20,7 @@ client.set_key('standard_13ebc858352d25697bcfc552c19ded6d8f8b7c1fef890c5d26bb99d
 databases = Databases(client)
 
 # Gemini AI config
-genai.configure(api_key="AIzaSyD8bn_xhL75EMan-0b8ypOVTk1xyBIaqms")
+genai.configure(api_key="")
 model = genai.GenerativeModel("gemini-2.0-flash-thinking-exp")
 
 def save_gemini_response_to_json(response_text, filename="movies.json"):
